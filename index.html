@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gift Creator</title>
+<style>
+body {
+  background:#202127;
+  color:white;
+  font-family:Arial,sans-serif;
+  padding:25px;
+}
+main {
+  max-width:500px;
+  margin:auto;
+  background:#30323a;
+  padding:22px;
+  border-radius:15px;
+}
+input {
+  box-sizing:border-box;
+  width:100%;
+  padding:13px;
+  margin:8px 0 16px;
+  border-radius:7px;
+  border:0;
+}
+button {
+  background:#d18b43;
+  color:white;
+  border:0;
+  padding:14px;
+  border-radius:8px;
+  width:100%;
+  font-size:16px;
+}
+label {display:block}
+#preview {
+  margin-top:20px;
+  padding:15px;
+  background:#202127;
+  border-radius:10px;
+}
+img {width:100%;border-radius:8px}
+</style>
+</head>
+<body>
+<main>
+<h1>Gift Creator</h1>
+<p>Create your own unofficial gift pages.</p>
+
+<label>Gift name</label>
+<input id="name" value="Triple T">
+
+<label>Subtitle</label>
+<input id="subtitle" value="TUNG TUNG SAHUR">
+
+<label>Expiration text</label>
+<input id="expiry" value="Expires in 43 hours">
+
+<label>Image URL</label>
+<input id="picture" placeholder="Public image URL">
+
+<label>Button text</label>
+<input id="buttonText" value="Accept">
+
+<label>Genuine gift URL</label>
+<input id="giftLink" placeholder="Your genuine gift link">
+
+<button onclick="previewGift()">Preview gift</button>
+
+<div id="preview">
+<h2 id="pname">Triple T</h2>
+<p id="psub">TUNG TUNG SAHUR</p>
+<p id="pexp">Expires in 43 hours</p>
+<img id="pimage" hidden>
+<button id="pbutton">Accept</button>
+<p>Unofficial gift page</p>
+</div>
+</main>
+
+<script>
+function previewGift() {
+ const name = document.getElementById('name').value;
+ const subtitle = document.getElementById('subtitle').value;
+ const expiry = document.getElementById('expiry').value;
+ const picture = document.getElementById('picture').value;
+
+ document.getElementById('pname').textContent = name;
+ document.getElementById('psub').textContent = subtitle;
+ document.getElementById('pexp').textContent = expiry;
+
+ const img = document.getElementById('pimage');
+ img.hidden = !picture;
+ if(picture) img.src = picture;
+
+ const button = document.getElementById('pbutton');
+ button.textContent =
+ document.getElementById('buttonText').value;
+
+ button.onclick = () => {
+   const link = document.getElementById('giftLink').value;
+   if(link && link.startsWith('https://discord.gift/')) {
+     location.href = link;
+   } else {
+     alert('Enter a valid genuine Discord gift link.');
+   }
+ };
+}
+</script>
+</body>
+</html>
