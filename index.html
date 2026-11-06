@@ -1,114 +1,347 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gift Creator</title>
-<style>
-body {
-  background:#202127;
-  color:white;
-  font-family:Arial,sans-serif;
-  padding:25px;
-}
-main {
-  max-width:500px;
-  margin:auto;
-  background:#30323a;
-  padding:22px;
-  border-radius:15px;
-}
-input {
-  box-sizing:border-box;
-  width:100%;
-  padding:13px;
-  margin:8px 0 16px;
-  border-radius:7px;
-  border:0;
-}
-button {
-  background:#d18b43;
-  color:white;
-  border:0;
-  padding:14px;
-  border-radius:8px;
-  width:100%;
-  font-size:16px;
-}
-label {display:block}
-#preview {
-  margin-top:20px;
-  padding:15px;
-  background:#202127;
-  border-radius:10px;
-}
-img {width:100%;border-radius:8px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gift Creator</title>
+  <meta name="description" content="Create an unofficial gift preview.">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 25px 15px;
+      background: #17191f;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .panel {
+      background: #242731;
+      padding: 22px;
+      border-radius: 14px;
+    }
+
+    h1, h2 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 6px;
+      color: #c9cbd3;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #414653;
+      border-radius: 7px;
+      background: #17191f;
+      color: white;
+      font-size: 15px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 7px;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .primary {
+      width: 100%;
+      margin-top: 16px;
+      background: #5865f2;
+      color: white;
+    }
+
+    .secondary {
+      background: #414653;
+      color: white;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .preview-card {
+      overflow: hidden;
+      border-radius: 12px;
+      background: #30333d;
+      text-align: center;
+      padding-bottom: 20px;
+    }
+
+    .preview-image {
+      display: block;
+      width: 100%;
+      max-height: 260px;
+      object-fit: cover;
+      background: #20232b;
+    }
+
+    .preview-content {
+      padding: 18px;
+    }
+
+    .preview-content h2 {
+      margin: 5px 0 10px;
+    }
+
+    .preview-content p {
+      color: #c9cbd3;
+    }
+
+    .accept-button {
+      background: #23a559;
+      color: white;
+      min-width: 150px;
+      margin-top: 12px;
+    }
+
+    .notice {
+      color: #aeb3c2;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 650px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<main>
-<h1>Gift Creator</h1>
-<p>Create your own unofficial gift pages.</p>
+  <h1 style="text-align:center;">Gift Creator</h1>
 
-<label>Gift name</label>
-<input id="name" value="Triple T">
+  <div class="container">
 
-<label>Subtitle</label>
-<input id="subtitle" value="TUNG TUNG SAHUR">
+    <section class="panel">
+      <h2>Create your gift</h2>
 
-<label>Expiration text</label>
-<input id="expiry" value="Expires in 43 hours">
+      <label for="giftName">Gift title</label>
+      <input id="giftName" value="Triple T">
 
-<label>Image URL</label>
-<input id="picture" value="IMG_1151.jpeg" placeholder="Public image URL">
+      <label for="giftSubtitle">Subtitle</label>
+      <input id="giftSubtitle" value="TUNG TUNG SAHUR">
 
-<label>Button text</label>
-<input id="buttonText" value="Accept">
+      <label for="giftExpiry">Expiry text</label>
+      <input id="giftExpiry" value="Expires in 43 hours">
 
-<label>Genuine gift URL</label>
-<input id="giftLink" placeholder="Your genuine gift link">
+      <label for="giftImage">Image filename or public image URL</label>
+      <input id="giftImage" value="IMG_1151.jpeg"
+             placeholder="Example: IMG_1151.jpeg">
 
-<button onclick="previewGift()">Preview gift</button>
+      <label for="buttonLabel">Button text</label>
+      <input id="buttonLabel" value="Accept">
 
-<div id="preview">
-<h2 id="pname">Triple T</h2>
-<p id="psub">TUNG TUNG SAHUR</p>
-<p id="pexp">Expires in 43 hours</p>
-<img id="pimage" hidden>
-<button id="pbutton">Accept</button>
-<p>Unofficial gift page</p>
-</div>
-</main>
+      <label for="giftLink">Your genuine Discord gift link</label>
+      <input id="giftLink"
+             placeholder="https://discord.gift/your-code">
 
-<script>
-function previewGift() {
- const name = document.getElementById('name').value;
- const subtitle = document.getElementById('subtitle').value;
- const expiry = document.getElementById('expiry').value;
- const picture = document.getElementById('picture').value;
+      <button class="primary" id="saveButton">Save this version</button>
 
- document.getElementById('pname').textContent = name;
- document.getElementById('psub').textContent = subtitle;
- document.getElementById('pexp').textContent = expiry;
+      <label for="savedVersions">Saved versions</label>
+      <select id="savedVersions">
+        <option value="">Choose a saved version</option>
+      </select>
 
- const img = document.getElementById('pimage');
- img.hidden = !picture;
- if(picture) img.src = picture;
+      <button class="secondary" id="loadButton">Load selected version</button>
+      <button class="secondary" id="deleteButton">Delete selected version</button>
 
- const button = document.getElementById('pbutton');
- button.textContent =
- document.getElementById('buttonText').value;
+      <p class="notice">
+        Your saved versions stay in this browser on this device.
+        They are not automatically shared with other people.
+      </p>
+    </section>
 
- button.onclick = () => {
-   const link = document.getElementById('giftLink').value;
-   if(link && link.startsWith('https://discord.gift/')) {
-     location.href = link;
-   } else {
-     alert('Enter a valid genuine Discord gift link.');
-   }
- };
-}
-</script>
+    <section class="panel">
+      <h2>Live preview</h2>
+
+      <div class="preview-card">
+        <img id="previewImage" class="preview-image"
+             src="IMG_1151.jpeg" alt="Gift preview">
+
+        <div class="preview-content">
+          <h2 id="previewName">Triple T</h2>
+          <p id="previewSubtitle">TUNG TUNG SAHUR</p>
+          <p id="previewExpiry">Expires in 43 hours</p>
+
+          <button class="accept-button" id="acceptButton">
+            Accept
+          </button>
+        </div>
+      </div>
+
+      <p class="notice">
+        This is an unofficial fan-made preview, not a Discord redemption
+        page. The button opens the genuine gift link you enter.
+      </p>
+    </section>
+
+  </div>
+
+  <script>
+    const fields = {
+      name: document.getElementById("giftName"),
+      subtitle: document.getElementById("giftSubtitle"),
+      expiry: document.getElementById("giftExpiry"),
+      image: document.getElementById("giftImage"),
+      button: document.getElementById("buttonLabel"),
+      link: document.getElementById("giftLink")
+    };
+
+    const preview = {
+      name: document.getElementById("previewName"),
+      subtitle: document.getElementById("previewSubtitle"),
+      expiry: document.getElementById("previewExpiry"),
+      image: document.getElementById("previewImage"),
+      button: document.getElementById("acceptButton")
+    };
+
+    const storageKey = "myGiftCreatorVersions";
+
+    function updatePreview() {
+      preview.name.textContent = fields.name.value;
+      preview.subtitle.textContent = fields.subtitle.value;
+      preview.expiry.textContent = fields.expiry.value;
+      preview.button.textContent = fields.button.value || "Accept";
+
+      const imagePath = fields.image.value.trim();
+
+      if (imagePath) {
+        preview.image.src = imagePath;
+        preview.image.style.display = "block";
+      } else {
+        preview.image.style.display = "none";
+      }
+    }
+
+    Object.values(fields).forEach(field => {
+      field.addEventListener("input", updatePreview);
+    });
+
+    function getVersions() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function refreshVersions() {
+      const select = document.getElementById("savedVersions");
+      const versions = getVersions();
+
+      select.innerHTML = '<option value="">Choose a saved version</option>';
+
+      versions.forEach((version, index) => {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = version.name || `Gift ${index + 1}`;
+        select.appendChild(option);
+      });
+    }
+
+    function getCurrentVersion() {
+      return {
+        name: fields.name.value,
+        subtitle: fields.subtitle.value,
+        expiry: fields.expiry.value,
+        image: fields.image.value,
+        button: fields.button.value,
+        link: fields.link.value
+      };
+    }
+
+    document.getElementById("saveButton").addEventListener("click", () => {
+      const versions = getVersions();
+      versions.push(getCurrentVersion());
+
+      localStorage.setItem(storageKey, JSON.stringify(versions));
+      refreshVersions();
+
+      alert("Your gift version has been saved in this browser.");
+    });
+
+    document.getElementById("loadButton").addEventListener("click", () => {
+      const index = document.getElementById("savedVersions").value;
+      const versions = getVersions();
+
+      if (index === "") {
+        alert("Choose a saved version first.");
+        return;
+      }
+
+      const version = versions[Number(index)];
+
+      fields.name.value = version.name || "";
+      fields.subtitle.value = version.subtitle || "";
+      fields.expiry.value = version.expiry || "";
+      fields.image.value = version.image || "";
+      fields.button.value = version.button || "Accept";
+      fields.link.value = version.link || "";
+
+      updatePreview();
+    });
+
+    document.getElementById("deleteButton").addEventListener("click", () => {
+      const select = document.getElementById("savedVersions");
+      const index = select.value;
+
+      if (index === "") {
+        alert("Choose a saved version first.");
+        return;
+      }
+
+      const versions = getVersions();
+      versions.splice(Number(index), 1);
+
+      localStorage.setItem(storageKey, JSON.stringify(versions));
+      refreshVersions();
+
+      alert("Saved version deleted.");
+    });
+
+    preview.button.addEventListener("click", () => {
+      const enteredLink = fields.link.value.trim();
+
+      try {
+        const url = new URL(enteredLink);
+
+        if (
+          url.protocol !== "https:" ||
+          url.hostname !== "discord.gift" ||
+          !url.pathname.match(/^\/[^/]+\/?$/)
+        ) {
+          throw new Error("Invalid gift link");
+        }
+
+        if (confirm("Open this genuine Discord gift link?")) {
+          window.location.href = url.href;
+        }
+      } catch {
+        alert("Enter a valid genuine Discord gift link first.");
+      }
+    });
+
+    updatePreview();
+    refreshVersions();
+  </script>
 </body>
 </html>
